@@ -9,7 +9,7 @@ defmodule Boom do
     # Define workers and child supervisors to be supervised
     children = [
       # worker(Boom.Worker, [arg1, arg2, arg3]),
-      worker(Task, [fn -> blinker() end])
+      worker(Task, [fn -> blinker() end], id: Boom.Blinker)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

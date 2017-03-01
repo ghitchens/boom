@@ -2,12 +2,24 @@ defmodule Boom.Mixfile do
   use Mix.Project
 
   @target System.get_env("NERVES_TARGET") || "rpi3"
+  @architecture System.get_env("NERVES_ARCHITECURE") || "unknown"
+  @timestamp DateTime.to_unix(DateTime.utc_now)
+  @version "0.1.2-dev-#{@timestamp}"
 
   def project do
     [app: :boom,
-     version: "0.1.0",
+     version: @version,
+     architecture: @architecture,
      target: @target,
      archives: [nerves_bootstrap: "~> 0.2.1"],
+     # cell config stuff
+     product: "Boom - ElixirDaze Demo",
+    descripton: """
+    Not sure exactly what it detects, but it detects something!
+    A sample project For the Raspberry Pi 3 and GrovePi board.
+    """,
+    author: "ElixirDaze Workshop",
+    tags: "development",
 
      deps_path: "deps/#{@target}",
      build_path: "_build/#{@target}",
@@ -23,14 +35,16 @@ defmodule Boom.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Boom, []},
-     extra_applications: [:logger, :nerves_leds]]
+     extra_applications: [:logger, :nerves_leds, :runtime_tools]]
   end
 
   def deps do
     [{:nerves, "~> 0.4.0"},
      {:nerves_interim_wifi, "~> 0.1"},
      {:logger_multicast_backend, "~> 0.2"},
+     {:elixir_ale, "~> 0.5.7"},
      {:nerves_firmware_http, "~>0.3.1"},
+     {:nerves_cell, github: "ghitchens/nerves_cell"},
      {:nerves_leds, "~> 0.8.0"}]
   end
 

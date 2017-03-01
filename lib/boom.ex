@@ -1,5 +1,9 @@
 defmodule Boom do
   use Application
+  require Logger
+
+  @interface :wlan0
+  @kernel_modules Mix.Project.config[:kernel_modules] || []
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -9,7 +13,11 @@ defmodule Boom do
     # Define workers and child supervisors to be supervised
     children = [
       # worker(Boom.Worker, [arg1, arg2, arg3]),
-      worker(Task, [fn -> blinker() end], id: Boom.Blinker)
+      worker(Task, [fn -> init_kernel_modules() end], restart: :transient, id: Nerves.Init.KernelModules),
+      worker(NetworkManager, [@interface], restart: :transient, id: Boom.Init.NetworkManager),
+      worker(Task, [fn -> init_wifi_network() end], restart: :transient, id: Nerves.Init.WifiNetwork),
+      worker(Task, [fn -> blinker() end], id: Boom.Blinker),
+      worker(Task, [fn -> talker() end], id: Boom.Talker),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -26,4 +34,17 @@ defmodule Boom do
     blinker()
   end
 
+  def talker() do
+    Logger.info "Hello from (YOUR NAME HERE)"
+    :timer.sleep 1000
+    talker()
+  end
+
+  def init_kernel_modules() do
+    Enum.each(@kernel_modules, & System.cmd("modprobe", [&1]))
+  end
+
+  def init_wifi_network() do
+    Nerves.InterimWiFi.setup @interface, Application.get_env(:boom, @interface)
+  end
 end

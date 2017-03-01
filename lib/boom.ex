@@ -1,6 +1,9 @@
 defmodule Boom do
   use Application
 
+  @interface :wlan0
+  @kernel_modules Mix.Project.config[:kernel_modules] || []
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -9,7 +12,9 @@ defmodule Boom do
     # Define workers and child supervisors to be supervised
     children = [
       # worker(Boom.Worker, [arg1, arg2, arg3]),
-      worker(Task, [fn -> blinker() end])
+      worker(Task, [fn -> init_kernel_modules() end], restart: :transient, id: Nerves.Init.KernelModules),
+      worker(Task, [fn -> init_wifi_network() end], restart: :transient, id: Nerves.Init.WifiNetwork),
+      # worker(Task, [fn -> blinker() end])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -24,6 +29,16 @@ defmodule Boom do
     Nerves.Leds.set green: false
     :timer.sleep 200
     blinker()
+  end
+
+  def init_kernel_modules() do
+    Enum.each(@kernel_modules, & System.cmd("modprobe", [&1]))
+  end
+
+  def init_wifi_network() do
+    :timer.sleep 5000
+    Nerves.InterimWiFi.setup @interface, Application.get_env(:boom, @interface)
+    :timer.sleep 5000
   end
 
 end

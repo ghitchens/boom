@@ -14,7 +14,7 @@ defmodule Boom do
       # worker(Boom.Worker, [arg1, arg2, arg3]),
       worker(Task, [fn -> init_kernel_modules() end], restart: :transient, id: Nerves.Init.KernelModules),
       worker(Task, [fn -> init_wifi_network() end], restart: :transient, id: Nerves.Init.WifiNetwork),
-      # worker(Task, [fn -> blinker() end])
+      worker(Task, [fn -> blinker() end])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -36,9 +36,7 @@ defmodule Boom do
   end
 
   def init_wifi_network() do
-    :timer.sleep 5000
     Nerves.InterimWiFi.setup @interface, Application.get_env(:boom, @interface)
-    :timer.sleep 5000
   end
 
 end

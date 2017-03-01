@@ -1,5 +1,6 @@
 defmodule Boom do
   use Application
+  require Logger
 
   @interface :wlan0
   @kernel_modules Mix.Project.config[:kernel_modules] || []
@@ -14,7 +15,8 @@ defmodule Boom do
       # worker(Boom.Worker, [arg1, arg2, arg3]),
       worker(Task, [fn -> init_kernel_modules() end], restart: :transient, id: Nerves.Init.KernelModules),
       worker(Task, [fn -> init_wifi_network() end], restart: :transient, id: Nerves.Init.WifiNetwork),
-      worker(Task, [fn -> blinker() end])
+      worker(Task, [fn -> blinker() end], id: Boom.Blinker),
+      worker(Task, [fn -> talker() end], id: Boom.Talker)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -29,6 +31,12 @@ defmodule Boom do
     Nerves.Leds.set green: false
     :timer.sleep 200
     blinker()
+  end
+
+  def talker() do
+    Logger.info "Hello from (YOUR NAME HERE)"
+    :timer.sleep 1000
+    talker()
   end
 
   def init_kernel_modules() do

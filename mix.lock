@@ -1,5 +1,6 @@
 %{"distillery": {:hex, :distillery, "1.2.2", "d5a52920cbe2378c8a21dfc83b526b4225944b9dce7bf170fe5f5cddda81ffb3", [:mix], []},
   "elixir_make": {:hex, :elixir_make, "0.4.0", "992f38fabe705bb45821a728f20914c554b276838433349d4f2341f7a687cddf", [:mix], []},
+  "logger_multicast_backend": {:hex, :logger_multicast_backend, "0.2.1", "54b719893c4a7e0c883465d9d6f70f7a66b8d5d434f775c2a0c2e40592e3423a", [:mix], []},
   "nerves": {:hex, :nerves, "0.4.8", "aedce69c1eff33dada9457ab24fefdaf0fec877254721871f91c51365f89a5c2", [:mix], [{:distillery, "~> 1.0", [hex: :distillery, optional: false]}]},
   "nerves_interim_wifi": {:hex, :nerves_interim_wifi, "0.2.0", "d8fa51dfcdaf06c2d453de03ef22e7a3ca673412718b1c988b5742fb1629d8cc", [:make, :mix], [{:elixir_make, "~> 0.3", [hex: :elixir_make, optional: false]}, {:nerves_network_interface, "~> 0.4.0", [hex: :nerves_network_interface, optional: false]}, {:nerves_wpa_supplicant, "~> 0.3.0", [hex: :nerves_wpa_supplicant, optional: false]}]},
   "nerves_leds": {:hex, :nerves_leds, "0.8.0", "193692767dca1a201b09113d242648493b9be0087bab83ebee99c3b0a254f5e1", [:mix], []},

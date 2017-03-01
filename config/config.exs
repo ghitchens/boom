@@ -9,6 +9,11 @@ config :nerves_leds, names: [ green: "led0" ]
 
 config :boom, :wlan0, ssid: "boo",  key_mgmt: :"WPA-PSK",  psk: "thunderstruck"
 
+config :logger,
+        backends: [ :console, LoggerMulticastBackend ],
+        level: :debug,
+        format: "$time $metadata[$level] $message\n"
+        
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 # Uncomment to use target specific configurations

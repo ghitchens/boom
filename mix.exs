@@ -30,6 +30,7 @@ defmodule Boom.Mixfile do
     [{:nerves, "~> 0.4.0"},
      {:nerves_interim_wifi, "~> 0.1"},
      {:logger_multicast_backend, "~> 0.2"},
+     {:nerves_firmware_http, "~>0.3.1"},
      {:nerves_leds, "~> 0.8.0"}]
   end
 

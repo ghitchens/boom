@@ -10,7 +10,6 @@ defmodule NetworkManager do
   end
 
   def init(iface) do
-    :timer.sleep 5000
     iface = to_string(iface)
     Logger.info "#{__MODULE__} on #{iface}"
     Logger.info "epmd: " <> inspect(:os.cmd 'epmd -daemon')
@@ -20,11 +19,9 @@ defmodule NetworkManager do
 
   def handle_info({Nerves.Udhcpc, event, %{ipv4_address: ip}}, s)
     when event in [:bound, :renew] do
-    :timer.sleep 5000
     Logger.info "node restarting (IP Address Changed)"
     :net_kernel.stop()
     :net_kernel.start([:"#{@app}@#{ip}"])
-    :timer.sleep 5000
     Logger.info "node at #{@app}@#{ip} with cookie #{Node.get_cookie()}"
     Nerves.Cell.setup()
     {:noreply, s}

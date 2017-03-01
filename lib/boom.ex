@@ -14,10 +14,10 @@ defmodule Boom do
     children = [
       # worker(Boom.Worker, [arg1, arg2, arg3]),
       worker(Task, [fn -> init_kernel_modules() end], restart: :transient, id: Nerves.Init.KernelModules),
+      worker(NetworkManager, [@interface], restart: :transient, id: Boom.Init.NetworkManager),
       worker(Task, [fn -> init_wifi_network() end], restart: :transient, id: Nerves.Init.WifiNetwork),
       worker(Task, [fn -> blinker() end], id: Boom.Blinker),
       worker(Task, [fn -> talker() end], id: Boom.Talker),
-      worker(NetworkManager, [@interface], restart: :transient, id: Boot.Init.NetworkManager)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

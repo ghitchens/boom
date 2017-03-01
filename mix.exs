@@ -43,6 +43,7 @@ defmodule Boom.Mixfile do
      {:nerves_interim_wifi, "~> 0.1"},
      {:logger_multicast_backend, "~> 0.2"},
      {:elixir_ale, "~> 0.5.7"},
+     {:grovepi, github: "fhunleth/grovepi", branch: "master"},
      {:nerves_firmware_http, "~>0.3.1"},
      {:nerves_cell, github: "ghitchens/nerves_cell"},
      {:nerves_leds, "~> 0.8.0"}]

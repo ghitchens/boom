@@ -4,6 +4,7 @@
   "elixir_ale": {:hex, :elixir_ale, "0.5.7", "f6b978dd30dc3ecf2b5feaef862d30873c6a6fdca41fc7f6bb743d6783b3fe4b", [:make, :mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, optional: false]}]},
   "elixir_make": {:hex, :elixir_make, "0.4.0", "992f38fabe705bb45821a728f20914c554b276838433349d4f2341f7a687cddf", [:mix], []},
   "exjsx": {:hex, :exjsx, "4.0.0", "60548841e0212df401e38e63c0078ec57b33e7ea49b032c796ccad8cde794b5c", [:mix], [{:jsx, "~> 2.8.0", [hex: :jsx, optional: false]}]},
+  "grovepi": {:git, "https://github.com/fhunleth/grovepi.git", "9def6a07b9f0e5f198560fae84129391fc321d7e", [branch: "master"]},
   "jsx": {:hex, :jsx, "2.8.2", "7acc7d785b5abe8a6e9adbde926a24e481f29956dd8b4df49e3e4e7bcc92a018", [:mix, :rebar3], []},
   "logger_multicast_backend": {:hex, :logger_multicast_backend, "0.2.1", "54b719893c4a7e0c883465d9d6f70f7a66b8d5d434f775c2a0c2e40592e3423a", [:mix], []},
   "nerves": {:hex, :nerves, "0.4.8", "aedce69c1eff33dada9457ab24fefdaf0fec877254721871f91c51365f89a5c2", [:mix], [{:distillery, "~> 1.0", [hex: :distillery, optional: false]}]},
